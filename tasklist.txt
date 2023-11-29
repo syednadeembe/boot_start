@@ -1,1 +1,7 @@
-1. Jenkins Setup
+###Jenkins Setup
+
+sudo yum upgrade
+sudo dnf install java-17-amazon-corretto -y
+sudo mount -o remount,size=5G /tmp/
+sudo yum intall jenkins -y
+sudo usermod -aG docker jenkins
