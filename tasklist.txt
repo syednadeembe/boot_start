@@ -13,6 +13,8 @@ sudo yum update -y
 sudo yum install -y docker
 sudo systemctl start docker
 sudo systemctl enable docker
+sudo usermod -aG docker jenkins
+
 cd /opt
 sudo yum install git -y
 git clone https://github.com/syednadeembe/project_sessions.git
@@ -21,3 +23,4 @@ docker build -t myflaskapp .
 docker run -p 9000:9000 myflaskapp &
 ### Command to see docker image ---> docker images
 ### Command to see docker container ---> docker ps
+### Command to switch to jenkins user ---> sudo su -s /bin/bash jenkins 
