@@ -5,3 +5,19 @@ sudo dnf install java-17-amazon-corretto -y
 sudo mount -o remount,size=5G /tmp/
 sudo yum intall jenkins -y
 sudo usermod -aG docker jenkins
+
+###Application Setup on Docker
+###Create a Ec2 and ssh it
+sudo su 
+sudo yum update -y
+sudo yum install -y docker
+sudo systemctl start docker
+sudo systemctl enable docker
+cd /opt
+sudo yum install git -y
+git clone https://github.com/syednadeembe/project_sessions.git
+cd session-1
+docker build -t myflaskapp .
+docker run -p 9000:9000 myflaskapp &
+### Command to see docker image ---> docker images
+### Command to see docker container ---> docker ps
