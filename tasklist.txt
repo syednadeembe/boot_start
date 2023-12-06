@@ -2,8 +2,11 @@
 
 sudo yum upgrade
 sudo dnf install java-17-amazon-corretto -y
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+    https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 sudo mount -o remount,size=5G /tmp/
-sudo yum intall jenkins -y
+sudo yum install jenkins -y
 sudo usermod -aG docker jenkins
 
 ###Application Setup on Docker
@@ -17,6 +20,11 @@ sudo usermod -aG docker jenkins
 
 cd /opt
 sudo yum install git -y
+
+###ADD DOCKER COMPOSE
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
 git clone https://github.com/syednadeembe/project_sessions.git
 cd session-1
 docker build -t myflaskapp .
