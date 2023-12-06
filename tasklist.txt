@@ -20,6 +20,11 @@ sudo usermod -aG docker jenkins
 
 cd /opt
 sudo yum install git -y
+
+###ADD DOCKER COMPOSE
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+
 git clone https://github.com/syednadeembe/project_sessions.git
 cd session-1
 docker build -t myflaskapp .
