@@ -1,3 +1,4 @@
+Task 1
 ###Jenkins Setup
 
 sudo yum upgrade
@@ -9,6 +10,7 @@ sudo mount -o remount,size=5G /tmp/
 sudo yum install jenkins -y
 sudo usermod -aG docker jenkins
 
+Task 2
 ###Application Setup on Docker
 ###Create a Ec2 and ssh it
 sudo su 
@@ -32,3 +34,6 @@ docker run -p 9000:9000 myflaskapp &
 ### Command to see docker image ---> docker images
 ### Command to see docker container ---> docker ps
 ### Command to switch to jenkins user ---> sudo su -s /bin/bash jenkins 
+
+Task 3
+#### Application Setup on Docker via Jenkins
