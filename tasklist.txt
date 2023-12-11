@@ -1,39 +1,69 @@
 Task 1
 ###Jenkins Setup
-
+### follow this page https://www.jenkins.io/doc/tutorials/tutorial-for-installing-jenkins-on-AWS/
+sudo yum update –y
+sudo wget -O /etc/yum.repos.d/jenkins.repo     https://pkg.jenkins.io/redhat-stable/jenkins.repo
+sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 sudo yum upgrade
 sudo dnf install java-17-amazon-corretto -y
-sudo wget -O /etc/yum.repos.d/jenkins.repo \
-    https://pkg.jenkins.io/redhat-stable/jenkins.repo
-sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io-2023.key
 sudo mount -o remount,size=5G /tmp/
 sudo yum install jenkins -y
-sudo usermod -aG docker jenkins
+sudo systemctl enable jenkins
+sudo systemctl start jenkins
+
 
 Task 2
 ###Application Setup on Docker
 ###Create a Ec2 and ssh it
-sudo su 
+
 sudo yum update -y
 sudo yum install -y docker
 sudo systemctl start docker
 sudo systemctl enable docker
 sudo usermod -aG docker jenkins
-
-cd /opt
 sudo yum install git -y
+### switch the user from root to jenkins and try to run docker command
+sudo su -s /bin/bash jenkins 
+whoami
+docker ps 
+exit
 
 ###ADD DOCKER COMPOSE
+whoami --> root or ec2_user
 sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+### This part is executed on the machine console CLI directly 
 git clone https://github.com/syednadeembe/project_sessions.git
 cd session-1
 docker build -t myflaskapp .
 docker run -p 9000:9000 myflaskapp &
+### if the job fails try to restart ---> http://ec2-3-86-240-200.compute-1.amazonaws.com:8080/restart
+### login again with admin and password 
 ### Command to see docker image ---> docker images
 ### Command to see docker container ---> docker ps
 ### Command to switch to jenkins user ---> sudo su -s /bin/bash jenkins 
 
 Task 3
 #### Application Setup on Docker via Jenkins
+### setup the jenkins 
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+### copy the public IP of the ec2 machine where jenkins is running 
+### for example ec2-3-86-240-200.compute-1.amazonaws.com open port 8080 in the SG 
+### login with the initialAdminPassword 
+Job 1
+### create the application build job
+### go to Build Steps and select the Execute shell 
+### write the following in Execute shell:
+git clone https://github.com/syednadeembe/project_sessions.git
+cd session-1
+docker build -t myflaskapp .
+### save and run the build job 
+### this job will create the docker image on the machine. Login to the machin and verify that the docker image is created 
+
+Job 2
+### create the application build run/deployment job
+### go to Build Steps and select the Execute shell 
+### write the following in Execute shell:
+docker run -p 9000:9000 myflaskapp &
+### after this job is green, your application should be running at <URL:9000>
