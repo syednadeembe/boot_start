@@ -88,8 +88,18 @@ docker push
 
 For example : docker login --username=snap79 --password=<user_password>
               docker tag myflaskapp:1.0 snap79/boot_start:1.0
-              docker push snap79/boot_start:1.0
+              docker push snap79/boot_start:1.0 
 
 
 ### login to dockerhub and see the docker image there 
+
+Task 5
+#### pull the application and run the docker-compose 
+### make sure docker is running in prod instance 
+### do the docker login 
+sudo docker pull snap79/boot_start:1.0
+docker run -p 9000:9000 snap79/boot_start:1.0 &
+
+### open the security group for the port and verify the app is running
+
 
